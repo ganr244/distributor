@@ -1,5 +1,6 @@
 package ru.otus.otuskotlin.distributor.m1l2.basic
 
+import kotlin.reflect.KClass
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
@@ -68,5 +69,15 @@ class BasicTest {
                 x = this.x + other.x,
                 y = this.y + other.y
             )
+    }
+
+    @Test
+    fun testKCLass() {
+
+        isKClass<String>(String::class)
+    }
+
+    private fun <T : Any> isKClass(v: KClass<T>) {
+        println("isKClass = ${v.simpleName}")
     }
 }
