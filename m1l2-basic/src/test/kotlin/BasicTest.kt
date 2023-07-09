@@ -48,4 +48,25 @@ class BasicTest {
         )
         */
     }
+
+    @Test
+    fun testOperator(){
+
+        println(ComplexNumber(x = 1, y = 1) + ComplexNumber(x = 2, y = 2))
+
+    }
+
+    private data class ComplexNumber(
+        val x: Int,
+        val y: Int,
+    )
+    {
+        override fun toString(): String =
+            "(x = ${this.x}, y = ${this.y})"
+        operator fun plus(other: ComplexNumber):ComplexNumber =
+            ComplexNumber(
+                x = this.x + other.x,
+                y = this.y + other.y
+            )
+    }
 }
