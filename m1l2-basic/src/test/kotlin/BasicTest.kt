@@ -80,4 +80,11 @@ class BasicTest {
     private fun <T : Any> isKClass(v: KClass<T>) {
         println("isKClass = ${v.simpleName}")
     }
+
+    @Test // ERROR java.lang.Exception: My test Nothing
+    fun testNothing (){
+        //myTestNothing()
+    }
+
+    private fun myTestNothing(): Nothing = throw Exception("My test Nothing")
 }
