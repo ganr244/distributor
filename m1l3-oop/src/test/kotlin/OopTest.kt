@@ -18,9 +18,24 @@ private interface FirstInterface {
 
 private data class FirstClass(override val sv1: String = "1", override val sv2: String = "2"): FirstInterface
 
-private abstract class FirstAbstract(){
+private abstract class FirstAbstract() {
     val sv1: String = ""
     val sv2: String = ""
+
+    // it can't interface
+    override fun toString(): String {
+        return super.toString()
+    }
+
+    // it can't interface
+    override fun equals(other: Any?): Boolean {
+        return super.equals(other)
+    }
+
+    // it can't interface
+    override fun hashCode(): Int {
+        return super.hashCode()
+    }
 }
 
 private class FirstChildren: FirstAbstract()
