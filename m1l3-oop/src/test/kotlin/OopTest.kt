@@ -16,7 +16,11 @@ private interface FirstInterface {
     }
 }
 
-private data class FirstClass(override val sv1: String = "1", override val sv2: String = "2"): FirstInterface
+private interface SecondInterface: FirstInterface {
+
+}
+
+private data class FirstClass(override val sv1: String = "1", override val sv2: String = "2"): SecondInterface
 
 private abstract class FirstAbstract() {
     val sv1: String = ""
