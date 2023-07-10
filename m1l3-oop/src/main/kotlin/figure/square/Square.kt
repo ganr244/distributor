@@ -14,7 +14,7 @@ class Square(val width: Int): Figure {
     }
 
     override fun hashCode(): Int = area()
-    override fun toString(): String = "Rectangle(${width}x${width})"
+    override fun toString(): String = "Square(${width}x${width})"
     override fun area(): Int = width * width
 
 }
