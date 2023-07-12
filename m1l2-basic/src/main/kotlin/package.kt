@@ -1,1 +1,0 @@
-package ru.otus.otuskotlin.distributor.m1l2.basic
