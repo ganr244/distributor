@@ -4,7 +4,35 @@ import junit.framework.TestCase.assertEquals
 import org.junit.Test
 
 class SqlSelectBuilder{
-    fun build(): String = ""
+
+    private lateinit var table: String
+    private var columns: ArrayList<String>? = null
+
+    fun select(vararg column: String){
+        if (column.isEmpty()) {
+            this.columns = null
+        } else {
+            this.columns = arrayListOf()
+            column.forEach {
+                columns?.add(it)
+            }
+        }
+    }
+
+    fun from(table: String) {
+        this.table = table
+    }
+
+    fun build():String =
+        "select ${
+            (this.columns?: arrayListOf("*"))
+                .joinToString(separator = ", ")
+        } from $table"
+
+}
+
+fun query(block: SqlSelectBuilder.() -> Unit): SqlSelectBuilder {
+    return SqlSelectBuilder().apply(block)
 }
 
 // Реализуйте dsl для составления sql запроса, чтобы все тесты стали зелеными.
@@ -15,13 +43,13 @@ class SqlDslUnitTest {
 
     @Test
     fun `simple select all from table`() {
-//        val expected = "select * from table"
-//
-//        val real = query {
-//            from("table")
-//        }
-//
-//        checkSQL(expected, real)
+        val expected = "select * from table"
+
+        val real = query {
+            from("table")
+        }
+
+        checkSQL(expected, real)
     }
 
     @Test
