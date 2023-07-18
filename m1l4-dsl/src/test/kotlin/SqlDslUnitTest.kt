@@ -64,14 +64,14 @@ class SqlDslUnitTest {
 
     @Test
     fun `select certain columns from table`() {
-//        val expected = "select col_a, col_b from table"
-//
-//        val real = query {
-//            select("col_a", "col_b")
-//            from("table")
-//        }
-//
-//        checkSQL(expected, real)
+        val expected = "select col_a, col_b from table"
+
+        val real = query {
+            select("col_a", "col_b")
+            from("table")
+        }
+
+        checkSQL(expected, real)
     }
 
     @Test
