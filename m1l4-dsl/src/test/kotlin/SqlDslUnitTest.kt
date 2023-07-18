@@ -2,10 +2,11 @@ package ru.otus.otuskotlin.distributor.m1l4.dsl
 
 import junit.framework.TestCase.assertEquals
 import org.junit.Test
+import kotlin.test.assertFailsWith
 
 class SqlSelectBuilder{
 
-    private var table: String = ""
+    private lateinit var table: String
     private var columns: ArrayList<String>? = null
 
     fun select(vararg column: String){
@@ -54,11 +55,11 @@ class SqlDslUnitTest {
 
     @Test
     fun `check that select can't be used without table`() {
-//        assertFailsWith<Exception> {
-//            query {
-//                select("col_a")
-//            }.build()
-//        }
+        assertFailsWith<Exception> {
+            query {
+                select("col_a")
+            }.build()
+        }
     }
 
     @Test
