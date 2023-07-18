@@ -132,16 +132,16 @@ class SqlDslUnitTest {
      */
     @Test
     fun `select with complex where condition with two conditions`() {
-//        val expected = "select * from table where col_a != 0"
-//
-//        val real = query {
-//            from("table")
-//            where {
-//                "col_a" nonEq 0
-//            }
-//        }
-//
-//        checkSQL(expected, real)
+        val expected = "select * from table where col_a != 0"
+
+        val real = query {
+            from("table")
+            where {
+                "col_a" nonEq 0
+            }
+        }
+
+        checkSQL(expected, real)
     }
 
     @Test
