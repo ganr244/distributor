@@ -29,6 +29,10 @@ class SqlSelectBuilder{
         block()
     }
 
+    fun or(block: SqlSelectBuilder.() -> Unit) {
+        conditions +="(" + SqlSelectBuilder().apply(block).conditions.joinToString(" or ") + ")"
+    }
+
     infix fun String.eq(value: Any?)  {
         conditions += when (value) {
             is String -> "$this = '$value'"
@@ -152,18 +156,18 @@ class SqlDslUnitTest {
 
     @Test
     fun `when 'or' conditions are specified then they are respected`() {
-//        val expected = "select * from table where (col_a = 4 or col_b !is null)"
-//
-//        val real = query {
-//            from("table")
-//            where {
-//                or {
-//                    "col_a" eq 4
-//                    "col_b" nonEq null
-//                }
-//            }
-//        }
-//
-//        checkSQL(expected, real)
+        val expected = "select * from table where (col_a = 4 or col_b !is null)"
+
+        val real = query {
+            from("table")
+            where {
+                or {
+                    "col_a" eq 4
+                    "col_b" nonEq null
+                }
+            }
+        }
+
+        checkSQL(expected, real)
     }
 }
