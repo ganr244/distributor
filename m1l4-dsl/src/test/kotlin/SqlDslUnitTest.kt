@@ -8,6 +8,7 @@ class SqlSelectBuilder{
 
     private lateinit var table: String
     private var columns: ArrayList<String>? = null
+    private var conditions: String? = null
 
     fun select(vararg column: String){
         if (column.isEmpty()) {
@@ -23,12 +24,17 @@ class SqlSelectBuilder{
     fun from(table: String) {
         this.table = table
     }
+    fun where(block: String.() -> String) {
+        conditions = block(String())
+    }
 
     fun build():String =
         "select ${
             (this.columns?: arrayListOf("*"))
                 .joinToString(separator = ", ")
-        } from $table"
+        } from $table${
+            conditions?.let{" where $it"}
+        }"
 
 }
 
@@ -108,14 +114,14 @@ class SqlDslUnitTest {
      */
     @Test
     fun `select with complex where condition with one condition`() {
-//        val expected = "select * from table where col_a = 'id'"
-//
-//        val real = query {
-//            from("table")
-//            where { "col_a" eq "id" }
-//        }
-//
-//        checkSQL(expected, real)
+        val expected = "select * from table where col_a = 'id'"
+
+        val real = query {
+            from("table")
+            where { "col_a" eq "id" }
+        }
+
+        checkSQL(expected, real)
     }
 
     /**
