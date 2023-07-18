@@ -24,8 +24,8 @@ class SqlSelectBuilder{
     fun from(table: String) {
         this.table = table
     }
-    fun where(block: String.() -> String) {
-        conditions = block(String())
+    fun where(block: () -> String) {
+        conditions = block()
     }
 
     fun build():String =
