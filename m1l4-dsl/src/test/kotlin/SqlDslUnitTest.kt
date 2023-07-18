@@ -5,7 +5,7 @@ import org.junit.Test
 
 class SqlSelectBuilder{
 
-    private lateinit var table: String
+    private var table: String = ""
     private var columns: ArrayList<String>? = null
 
     fun select(vararg column: String){
