@@ -3,11 +3,15 @@ package ru.otus.otuskotlin.distributor.m1l4.dsl
 import junit.framework.TestCase.assertEquals
 import org.junit.Test
 
+class SqlSelectBuilder{
+    fun build(): String = ""
+}
+
 // Реализуйте dsl для составления sql запроса, чтобы все тесты стали зелеными.
 class SqlDslUnitTest {
-//    private fun checkSQL(expected: String, sql: SqlSelectBuilder) {
-//        assertEquals(expected, sql.build())
-//    }
+    private fun checkSQL(expected: String, sql: SqlSelectBuilder) {
+        assertEquals(expected, sql.build())
+    }
 
     @Test
     fun `simple select all from table`() {
