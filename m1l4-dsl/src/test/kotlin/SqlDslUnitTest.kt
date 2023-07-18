@@ -43,6 +43,13 @@ infix fun String.eq(value: Any?): String = when (value) {
     else -> throw Exception("Exception 0001")
 }
 
+infix fun String.nonEq(value: Any?): String = when (value) {
+    is String -> "$this != '$value'"
+    is Number -> "$this != $value"
+    null ->  "$this is not null"
+    else -> throw Exception("Exception 0002")
+}
+
 // Реализуйте dsl для составления sql запроса, чтобы все тесты стали зелеными.
 class SqlDslUnitTest {
     private fun checkSQL(expected: String, sql: SqlSelectBuilder) {
