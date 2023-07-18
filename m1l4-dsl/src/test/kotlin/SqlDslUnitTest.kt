@@ -52,7 +52,7 @@ infix fun String.eq(value: Any?): String = when (value) {
 infix fun String.nonEq(value: Any?): String = when (value) {
     is String -> "$this != '$value'"
     is Number -> "$this != $value"
-    null ->  "$this is not null"
+    null ->  "$this !is null"
     else -> throw Exception("Exception 0002")
 }
 
