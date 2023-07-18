@@ -8,7 +8,7 @@ class SqlSelectBuilder{
 
     private lateinit var table: String
     private var columns: ArrayList<String>? = null
-    private var conditions: String? = null
+    private var conditions = listOf<String>()
 
     fun select(vararg column: String){
         if (column.isEmpty()) {
@@ -24,8 +24,27 @@ class SqlSelectBuilder{
     fun from(table: String) {
         this.table = table
     }
-    fun where(block: () -> String) {
-        conditions = block()
+
+    fun where(block: () -> Unit) {
+        block()
+    }
+
+    infix fun String.eq(value: Any?)  {
+        conditions += when (value) {
+            is String -> "$this = '$value'"
+            is Number -> "$this = $value"
+            null ->  "$this is null"
+            else -> throw Exception("Exception 0001")
+        }
+    }
+
+    infix fun String.nonEq(value: Any?){
+        conditions += when (value){
+            is String -> "$this != '$value'"
+            is Number -> "$this != $value"
+            null ->  "$this !is null"
+            else -> throw Exception("Exception 0002")
+        }
     }
 
     fun build():String =
@@ -33,27 +52,13 @@ class SqlSelectBuilder{
             (this.columns?: arrayListOf("*"))
                 .joinToString(separator = ", ")
         } from $table${
-            conditions?.let{" where $it"}
+            conditions.takeIf { it.isNotEmpty() }?.let{" where ${it.joinToString(separator = " and ")}"} ?: ""
         }"
 
 }
 
 fun query(block: SqlSelectBuilder.() -> Unit): SqlSelectBuilder {
     return SqlSelectBuilder().apply(block)
-}
-
-infix fun String.eq(value: Any?): String = when (value) {
-    is String -> "$this = '$value'"
-    is Number -> "$this = $value"
-    null ->  "$this is null"
-    else -> throw Exception("Exception 0001")
-}
-
-infix fun String.nonEq(value: Any?): String = when (value) {
-    is String -> "$this != '$value'"
-    is Number -> "$this != $value"
-    null ->  "$this !is null"
-    else -> throw Exception("Exception 0002")
 }
 
 // Реализуйте dsl для составления sql запроса, чтобы все тесты стали зелеными.
@@ -132,12 +137,13 @@ class SqlDslUnitTest {
      */
     @Test
     fun `select with complex where condition with two conditions`() {
-        val expected = "select * from table where col_a != 0"
+        val expected = "select * from table where col_a != 0 and col_b = '1'"
 
         val real = query {
             from("table")
             where {
                 "col_a" nonEq 0
+                "col_b" eq "1"
             }
         }
 
