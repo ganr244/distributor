@@ -36,6 +36,13 @@ fun query(block: SqlSelectBuilder.() -> Unit): SqlSelectBuilder {
     return SqlSelectBuilder().apply(block)
 }
 
+infix fun String.eq(value: Any?): String = when (value) {
+    is String -> "$this = '$value'"
+    is Number -> "$this  = $value"
+    null ->  "$this is null"
+    else -> throw Exception("Exception 0001")
+}
+
 // Реализуйте dsl для составления sql запроса, чтобы все тесты стали зелеными.
 class SqlDslUnitTest {
     private fun checkSQL(expected: String, sql: SqlSelectBuilder) {
