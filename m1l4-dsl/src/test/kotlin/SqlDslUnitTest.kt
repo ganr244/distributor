@@ -38,7 +38,7 @@ fun query(block: SqlSelectBuilder.() -> Unit): SqlSelectBuilder {
 
 infix fun String.eq(value: Any?): String = when (value) {
     is String -> "$this = '$value'"
-    is Number -> "$this  = $value"
+    is Number -> "$this = $value"
     null ->  "$this is null"
     else -> throw Exception("Exception 0001")
 }
